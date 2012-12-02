@@ -21,11 +21,11 @@ public class CountryBin {
 	
 	public CountryBin() {
 		
-		this.weocode = 0;
+		this.setWEOcode(0);
 		this.countryname = null;
 		this.currency = null;
 		this.scale = null;
-		this.gdplist = new ArrayList<Double>();
+		this.setGDPList(new ArrayList<Double>());
 		this.ID = idCounter++;
 	}
 	
@@ -36,11 +36,11 @@ public class CountryBin {
 		
 		while(i < 6) {
 			
-			if (this.gdplist.get(i) == null || b.gdplist.get(i) == null)
+			if (this.getGDPList().get(i) == null || b.getGDPList().get(i) == null)
 				break;
 
-			Double x = (this.gdplist.get(i) - this.average)/this.stdev;
-			Double y = (b.gdplist.get(i) - b.average)/b.stdev;
+			Double x = (this.getGDPList().get(i) - this.average)/this.stdev;
+			Double y = (b.getGDPList().get(i) - b.average)/b.stdev;
 
 			Double z = x*y;
 			
@@ -60,10 +60,10 @@ public class CountryBin {
 		
 		//Take the sum of gdplist and divide by n
 		
-		for (Double x1 : gdplist) 
+		for (Double x1 : getGDPList()) 
 			summation += x1;
 		
-		average = summation/gdplist.size();
+		average = summation/getGDPList().size();
 		
 		//Now we have the mean
 		
@@ -73,19 +73,35 @@ public class CountryBin {
 		
 		summation = new Double(0);
 	
-		for (Double x1 : gdplist) {  // look at each year GDP
+		for (Double x1 : getGDPList()) {  // look at each year GDP
 			Double x2 = x1 - average; // subtract the average from that year GDP
 			
 			summation += (x2*x2); // square the result and add it to a total sum	
 		}
 		
-		summation = summation/gdplist.size();
+		summation = summation/getGDPList().size();
 	
 		stdev = Math.sqrt(summation);
 	}
 	
+	public int getWEOcode() {
+		return this.weocode;
+	}
+
+	public void setWEOcode(int weocode) {
+		this.weocode = weocode;
+	}
+
+	public ArrayList<Double> getGDPList() {
+		return gdplist;
+	}
+
+	public void setGDPList(ArrayList<Double> gdplist) {
+		this.gdplist = gdplist;
+	}
+
 	public void setCode(int weo) {
-		this.weocode = weo;
+		this.setWEOcode(weo);
 	}
 	
 	public void setName(String name) {
@@ -106,14 +122,14 @@ public class CountryBin {
 	}
 	
 	public void add(Double num) {
-		this.gdplist.add(num);
+		this.getGDPList().add(num);
 	}
 	
 	public void Print(PrintStream outfile) {
 		
-		outfile.printf(weocode + " " + countryname + " " + currency + " " + scale + " ");
+		outfile.printf(getWEOcode() + " " + countryname + " " + currency + " " + scale + " ");
 		
-		for (Double b : gdplist)
+		for (Double b : getGDPList())
 			outfile.printf(b + " ");
 		
 		outfile.println("Average GDP = " + average + " Standard Deviation = " + stdev);
