@@ -170,7 +170,7 @@ public class GDPScanner {
 
 		//attempt to run DFS from every node
 		for(int i = 0; i < NUMBER_OF_NODES; i++) {
-			Node sourceNode = scanner.bigGraphOfJustice.getNode(i);
+			CountryBin sourceNode = fetch(i);
 
 			//if the node isn't visited, we want to run DFS on it
 			if(state[sourceNode.getId()] == UNDISCOVERED){

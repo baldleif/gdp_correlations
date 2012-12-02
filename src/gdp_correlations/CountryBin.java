@@ -6,22 +6,27 @@ import java.io.*;
 
 public class CountryBin {
 
-	int weocode;
-	Double stdev;
-	Double average;
-	String countryname;
-	String currency;
-	String scale;
-	ArrayList<Double> gdplist;
+	private int 	weocode;
+	private Double 	stdev;
+	private Double 	average;
+	private String 	countryname;
+	private	String 	currency;
+	private	String 	scale;
+	private	ArrayList<Double> gdplist;
+	private	int		ID;
+	
+	//counter to generate IDs
+	private static int idCounter = 0;
+	
 	
 	public CountryBin() {
 		
-		weocode = 0;
-		countryname = null;
-		currency = null;
-		scale = null;
-		gdplist = new ArrayList<Double>();
-		
+		this.weocode = 0;
+		this.countryname = null;
+		this.currency = null;
+		this.scale = null;
+		this.gdplist = new ArrayList<Double>();
+		this.ID = idCounter++;
 	}
 	
 	public Double calcCorrelation(CountryBin b) {
@@ -80,23 +85,28 @@ public class CountryBin {
 	}
 	
 	public void setCode(int weo) {
-		weocode = weo;
+		this.weocode = weo;
 	}
 	
 	public void setName(String name) {
-		countryname = name;
+		this.countryname = name;
 	}
 	
 	public void setCurrency(String cur) {
-		currency = cur;
+		this.currency = cur;
 	}
 	
 	public void setScale(String sc) {
-		scale = sc;
+		this.scale = sc;
+	}
+	
+	public int getID()
+	{
+		return this.ID;
 	}
 	
 	public void add(Double num) {
-		gdplist.add(num);
+		this.gdplist.add(num);
 	}
 	
 	public void Print(PrintStream outfile) {
