@@ -36,7 +36,7 @@ public class CountryBin {
 		
 		while(i < 6) {
 			
-			if (this.getGDPList().get(i) == null || b.getGDPList().get(i) == null)
+			if (this.gdplist.size() <= i|| b.gdplist.size() <= i)
 				break;
 
 			Double x = (this.getGDPList().get(i) - this.average)/this.stdev;

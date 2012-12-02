@@ -29,6 +29,7 @@ public class GDPScanner {
 			Scanner fin = new Scanner(new File("weoreptc.aspx"));
 
 			countrydata = new ArrayList<CountryBin>();
+			countrycorrelations = new ArrayList<CountryCorrelation>();
 
 			//Scan through the first line (Garbage) 
 			fin.nextLine();
@@ -121,6 +122,19 @@ public class GDPScanner {
 			//			}
 
 			//Compute r for each pair of countries
+			for (CountryBin a : countrydata)
+				for (CountryBin b : countrydata) {
+
+					if (a == b)
+						continue;
+
+					countrycorrelations.add(new CountryCorrelation(a.getWEOcode(), b.getWEOcode(), a.calcCorrelation(b)));
+				}
+
+			PrintStream corfile = new PrintStream(new File("correlations.txt"));
+
+			for (CountryCorrelation c : countrycorrelations)
+				corfile.println(c.weo1 + " " + c.weo2 + " " + c.correlation);
 
 
 
@@ -192,7 +206,7 @@ public class GDPScanner {
 
 					//visit child
 					CountryBin child = null;
-					
+
 					//copies the parent node's edge list into an array
 					//TODO figure out how to do this in our implementation
 					Integer[] edges = null; //currentNode.getGDPList().toArray(new Integer[currentNode.getGDPList().size()]);
@@ -205,7 +219,7 @@ public class GDPScanner {
 						if (state[edge] == UNDISCOVERED)
 							child = this.getCountryData().get(edge);
 					}
-			
+
 					//if it exists
 					if(child != null) {
 						state[child.getID()] = VISITED;
