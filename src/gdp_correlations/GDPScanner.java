@@ -12,8 +12,12 @@ import java.io.*;
  */
 public class GDPScanner {
 	
+	final double T_VALUE = .40;
+	
 	ArrayList<CountryBin> countrydata;
 	ArrayList<CountryCorrelation> countrycorrelations;
+	Network G;
+	Scanner fin;
 	
 	public static void main(String args[]) {
 		
@@ -126,6 +130,8 @@ public class GDPScanner {
 			for (CountryCorrelation c : countrycorrelations)
 				corfile.println(c.weo1 + " " + c.weo2 + " " + c.correlation);
 			
+			G = new Network();
+			
 			CorrelationBin rBin = new CorrelationBin(new Scanner(new File("correlations.txt")));
 			
 			rBin.G.printWeighted(new PrintStream(new File("weightedEdges.txt")));
@@ -134,6 +140,44 @@ public class GDPScanner {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	public void populateNetwork() {
+		
+		while (fin.hasNextInt()) {
+			
+			int source = fin.nextInt();
+			int dest = fin.nextInt();
+			
+			Double weight = fin.nextDouble();
+			
+			//FOR ALL EDGES (X, Y) IN |E|, IFF |C(X,Y)| > T (CHOOSE A VALUE T SUCH THAT THE EDGE DENSITY OF G IS BETWEEN 0.05 AND 0.50)
+			if (Math.abs(weight) < T_VALUE) 
+				continue; //omit this edge
+			
+			Vertex a = G.getVertex(source);
+			Vertex b = G.getVertex(dest);
+			
+			if (a != null) a.connections.add(dest);
+			
+			else if (a == null) {
+				
+				a = new Vertex(source);
+				a.connections.add(dest);
+				G.vertices.add(a);
+				
+			}
+			
+			if (b == null) {
+				
+				b = new Vertex(dest);
+				G.vertices.add(b);
+				
+			}
+			
+			G.insertDirectedEdge(a, b, weight);
+			
 		}
 	}
 	

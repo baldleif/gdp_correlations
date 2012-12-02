@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package gdp_correlations;
 
 import java.io.*;
@@ -50,4 +49,3 @@ public class CountryCorrelation {
 	}
 	
 }
->>>>>>> FETCH_HEAD
