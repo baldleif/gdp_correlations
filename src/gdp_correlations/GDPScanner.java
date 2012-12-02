@@ -191,7 +191,21 @@ public class GDPScanner {
 					state[currentNode.getID()] = DISCOVERED;
 
 					//visit child
-					CountryBin child = getUnvisitedChild(currentNode);
+					CountryBin child = null;
+					
+					//copies the parent node's edge list into an array
+					//TODO figure out how to do this in our implementation
+					Integer[] edges = null; //currentNode.getGDPList().toArray(new Integer[currentNode.getGDPList().size()]);
+
+					//for each edge in edges
+					for (Integer edge : edges)
+					{
+						//if the edge is undiscovered, return the node that edge refers to
+						//if this never runs, the node has no edges that are undiscovered
+						if (state[edge] == UNDISCOVERED)
+							child = this.getCountryData().get(edge);
+					}
+			
 					//if it exists
 					if(child != null) {
 						state[child.getID()] = VISITED;
@@ -212,24 +226,4 @@ public class GDPScanner {
 
 		}
 	}
-
-	//returns an undiscovered child node if one exists, null if it doesn't
-	public CountryBin getUnvisitedChild(CountryBin parent)
-	{
-		//copies the parent node's edge list into an array
-		Double[] edges = parent.getGDPlist().toArray(new Double[parent.getGDPlist().size()]);
-
-		//for each edge in edges
-		for (Double edge : edges)
-		{
-			//if the edge is undiscovered, return the node that edge refers to
-			if (state[edge] == UNDISCOVERED)
-				return scanner.bigGraphOfJustice.getNode(edge);
-		}
-
-		//the node has no edges that are undiscovered
-		return null;
-	}
-}
-
 }
