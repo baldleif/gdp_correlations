@@ -2,7 +2,6 @@ package gdp_correlations;
 
 import java.util.*;
 
-
 public class Vertex {
 
 	int id;

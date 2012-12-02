@@ -3,7 +3,6 @@ package gdp_correlations;
 import java.util.*;
 import java.io.*;
 
-
 public class Network {
 	
 	ArrayList<Vertex> vertices;

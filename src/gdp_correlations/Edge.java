@@ -1,6 +1,5 @@
 package gdp_correlations;
 
-
 public class Edge {
 	Vertex a;
 	Vertex b;
